@@ -9,6 +9,8 @@ use App\Models\Staff;
 class Collaboration extends Model
 {
     use HasFactory;
+    protected $table = 'collaborations';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'name', 
         'type',
@@ -17,7 +19,7 @@ class Collaboration extends Model
         'focal_person'
     ];
 
-    public function staffs()
+    public function staff()
     {
         return $this->belongsTo(Staff::class);
     }

@@ -15,9 +15,9 @@ class Staff extends Model
         'phone_number'
     ];
 
-    public function collaborations()
+    public function Collaboration()
     {
-        return $this->hasMany(Collaboration::class, 'focal_person', 'name');
+        return $this->hasMany(collaboration::class);
     }
 
 }
