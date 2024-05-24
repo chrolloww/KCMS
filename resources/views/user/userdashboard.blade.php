@@ -90,53 +90,42 @@
         <input type="radio" name="accordion" id="first">
         <label for="first">LETTER OF INTENT (LoI) </label>
         <div class="content">
-            <!--
-            <div class="container">
-            <div class="card-doctor">
-            <div class="header">
-              <img src="../assets/img/doctors/doctor_1.jpg" alt="">
-              <div class="meta">
-                <a href="#"><span class="mai-call"></span></a>
-                <a href="#"><span class="mai-logo-whatsapp"></span></a>
-              </div>
-            </div>
-            <div class="body">
-              <p class="text-xl mb-0">Dr. Stein Albert</p>
-              <span class="text-sm text-grey">Cardiology</span>
-            </div>
-            </div>
-        </div>-->
-        @foreach($collaboration as $collaborations)
           <table>
-            <tr>
+
+            @foreach($datas as $data)
+            @if($data->c_type == "LoI")
+
+            <tr style = "height: 100px;">
+              <td>{{$loop -> iteration}}</td>
               <td>
               <div class="image">
-                <img width= "100 px"src="collabimages/{{$collaborations->image}}" alt="">
+                <img width= "100 px"src="collabimages/{{$data->c_image}}" alt="">
               </div>
               </td>
 
               <td>
-              <table>
+              <table >
                 <tr>
                   <div class="name">
-                  <p class="text-xl mb-0">{{$collaborations->name}}</p>
+                  <p class="text-xl mb-0">{{$data->c_name}}</p>
                 </div>
                 </tr>
                 <tr>
                   <td>
-                  <span class="text-sm text-grey">{{$collaborations->focal_person}}</span>
+                  <span class="text-sm text-grey">{{$data->c_focal_person}}</span>
                   </td>
                   <td>
-                  <span class="text-sm1 text-grey">123456789</span>
+                  <span class="text-sm1 text-grey">{{$data -> s_phone_number}}</span>
                   </td>
                 </tr>
               </table>
               </td>
               
             </tr>
+            @endif
+            @endforeach
           </table>
 
-        @endforeach
         </div>
     </li>
 
@@ -144,7 +133,42 @@
         <input type="radio" name="accordion" id="second">
         <label for="second">MoA</label>
         <div class="content">
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quam rerum mollitia itaque quos officia et ratione corporis possimus. Ut, eum culpa! Commodi, facere blanditiis! Dolores accusamus non obcaecati voluptatibus. Voluptates!</p>
+          <table>
+
+            @foreach($datas as $data)
+            @if($data->c_type == "MoA")
+
+            <tr style = "height: 100px;">
+              <td>{{$loop -> iteration}}</td>
+              <td>
+              <div class="image">
+                <img width= "100 px"src="collabimages/{{$data->c_image}}" alt="">
+              </div>
+              </td>
+
+              <td>
+              <table >
+                <tr>
+                  <div class="name">
+                  <p class="text-xl mb-0">{{$data->c_name}}</p>
+                </div>
+                </tr>
+                <tr>
+                  <td>
+                  <span class="text-sm text-grey">{{$data->c_focal_person}}</span>
+                  </td>
+                  <td>
+                  <span class="text-sm1 text-grey">{{$data -> s_phone_number}}</span>
+                  </td>
+                </tr>
+              </table>
+              </td>
+              
+            </tr>
+            @endif
+            @endforeach
+          </table>
+
         </div>
     </li>
 
@@ -152,7 +176,42 @@
         <input type="radio" name="accordion" id="third">
         <label for="third">MoU</label>
         <div class="content">
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quam rerum mollitia itaque quos officia et ratione corporis possimus. Ut, eum culpa! Commodi, facere blanditiis! Dolores accusamus non obcaecati voluptatibus. Voluptates!</p>
+          <table>
+
+            @foreach($datas as $data)
+            @if($data->c_type == "MoU")
+
+            <tr style = "height: 100px;">
+              <td>{{$loop -> iteration}}</td>
+              <td>
+              <div class="image">
+                <img width= "100 px"src="collabimages/{{$data->c_image}}" alt="">
+              </div>
+              </td>
+
+              <td>
+              <table >
+                <tr>
+                  <div class="name">
+                  <p class="text-xl mb-0">{{$data->c_name}}</p>
+                </div>
+                </tr>
+                <tr>
+                  <td>
+                  <span class="text-sm text-grey">{{$data->c_focal_person}}</span>
+                  </td>
+                  <td>
+                  <span class="text-sm1 text-grey">{{$data -> s_phone_number}}</span>
+                  </td>
+                </tr>
+              </table>
+              </td>
+              
+            </tr>
+            @endif
+            @endforeach
+          </table>
+
         </div>
     </li>
   </ul>

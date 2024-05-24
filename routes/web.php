@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\JoinController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,5 +34,7 @@ Route::get('/add_collaboration_view', 'App\Http\Controllers\AdminController@addv
 
 Route::post('/upload_collaboration', 'App\Http\Controllers\AdminController@upload');
 
-Route::get('/userdashboard', 'App\Http\Controllers\HomeController@userdashboard');
+Route::get('/userdashboard', 'App\Http\Controllers\JoinController@display_collaboration_user');
+
+Route::get('/List_MoA', 'App\Http\Controllers\JoinController@display_collaboration_admin');
 

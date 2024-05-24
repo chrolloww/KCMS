@@ -10,14 +10,14 @@ class Staff extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name', 
-        'email', 
-        'phone_number'
+        's_name', 
+        's_email', 
+        's_phone_number'
     ];
 
-    public function Collaboration()
+    public function collaborations()
     {
-        return $this->hasMany(collaboration::class);
+        return $this->hasMany(collaboration::class, 'c_focal_person', 's_name');
     }
 
 }

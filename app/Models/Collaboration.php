@@ -9,14 +9,14 @@ use App\Models\Staff;
 class Collaboration extends Model
 {
     use HasFactory;
-    protected $table = 'collaborations';
-    protected $primaryKey = 'id';
+    //protected $table = 'collaborations';
+    //protected $primaryKey = 'id';
     protected $fillable = [
-        'name', 
-        'type',
-        'benefit',
-        'image', 
-        'focal_person'
+        'c_name', 
+        'c_type',
+        'c_benefit',
+        'c_image', 
+        'c_focal_person'
     ];
 
     public function staff()

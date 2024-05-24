@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('collaborations', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('focal_person');
-            $table->string('type');
-            $table->string('benefit');
-            $table->string('start_date');
-            $table->string('end_date');
-            $table->string('image');
+            $table->string('c_name');
+            $table->string('c_focal_person');
+            $table->string('c_type');
+            $table->string('c_benefit');
+            $table->string('c_start_date');
+            $table->string('c_end_date');
+            $table->string('c_image');
             $table->timestamps();
         });
     }

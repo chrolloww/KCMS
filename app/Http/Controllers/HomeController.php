@@ -38,14 +38,15 @@ class HomeController extends Controller
         }
     }
 
-    public function userdashboard()
+    /*public function userdashboard()
     {
-        $collaboration = Collaboration::all();
-        return view('user.userdashboard', compact('collaboration'));
-    }
-
-    public function collaboration()
-    {
+        $collaborations = Collaboration::with('staff')->get();
+        $staffs = Staff::with('collaborations')->get();
         
-    }
+        return view('user.userdashboard', compact('collaborations', 'staffs'));
+    }*/
+
+    
+
+    
 }
