@@ -22,78 +22,98 @@
 
         <!-- partial -->
 
-        <div class="container-fluid page-body-wrapper">
+        <div class="container-fluid page-body-wrapper"  style="padding-top: 50px;">
 
-        <div class="container" align="center" style="padding-top: 100px;">
+        <div class="container">
 
-        @if(session()->has('message'))
-            <div class="alert alert-success">
+        <div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            @if(session()->has('message'))
+              <div class="alert alert-success" >
 
-            <button type="button" class="close" data-bs-dismiss="alert">x</button>
+              <button type="button" class="close" data-bs-dismiss="alert">x</button>
                 {{ session()->get('message') }}
+              </div>
+            @endif
+            
+            <div class="card">
+                <div class="card-header">Add Collaboration</div>
+                <div class="card-body">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    <form action="{{url('upload_collaboration')}}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            <label for="">Collaboration Name</label>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Collaboration Name" required autofocus>
+                            @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="">Focal Person</label>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror"  name="focal_person" placeholder="Focal Person" required>
+                            @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="">Benefit</label>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror"  name="benefit" placeholder="Benefit" required>
+                            @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="">Start Date</label>
+                            <input type="date" class="form-control @error('name') is-invalid @enderror" name="start_date" required>
+                            @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="">End Date</label>
+                            <input type="date" class="form-control @error('name') is-invalid @enderror" name="end_date" required>
+                            @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="">Image</label>
+                            <input type="file" class="form-control @error('name') is-invalid @enderror" name="file" required>
+                            @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </form>
+                </div>
             </div>
-        @endif
-
-        <form action="{{url('upload_collaboration')}}" method="POST" enctype="multipart/form-data">
-
-        @csrf
-
-            <div class="row mt-5 ">
-
-                <div style="padding:15px;">
-                    <label for="">Collaboration Name</label>
-                    <input type="text" style="color:black;" name="name" placeholder="Collaboration Name" required="">
-                </div>
-
-                <div style="padding:15px;">
-                    <label for="">Focal Person</label>
-                    <input type="text" style="color:black;" name="focal_person" placeholder="Focal Person" required="">
-                </div>
-
-                <div style="padding:15px;">
-                    <label for="">Type of Collaboration</label>
-
-                    <select name="type" style="color:black; width: 200px;" required="">
-                        <option >--Select--</option>
-                        <option value="MoA">MoA</option>
-                        <option value="MoU">MoU</option>
-                        <option value="LoI">LoI</option>
-                    </select>
-                </div>
-
-                <div style="padding:15px;">
-                    <label for="">Benefit</label>
-                    <input type="text" style="color:black;" name="benefit" placeholder="benefit" required="">
-                </div>
-
-                <div class="center">
-                <div class="col-2 py-2">
-                    <label for="">Start Date</label>
-                    <input type="date" name="start_date" class="form-control" style="color:black;" required="">
-                </div>
-
-                <div class="col-2 py-2">
-                    <label for="">End Date</label>
-                    <input type="date" name="end_date" class="form-control" style="color:black;" required="">
-                </div>
-                </div>
-
-                <div style="padding:15px;">
-                    <label >Image</label>
-                    <input type="file" name="file" required="">
-                </div>
-
-                <div style="padding:15px;">
-                    <input type="submit" class="btn btn-success">
-                </div>
-
-            </div>
-
-        </form>
+        </div>
+    </div>
+</div>
 
         </div>
 
         </div>
+
+        
     <!-- container-scroller -->
     <!-- plugins:js -->
     
