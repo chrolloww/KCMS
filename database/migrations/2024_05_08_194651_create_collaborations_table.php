@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('focal_person');
-            $table->string('type');
+            $table->string('type')->default('LoI');
             $table->string('benefit');
             $table->string('start_date');
             $table->string('end_date');

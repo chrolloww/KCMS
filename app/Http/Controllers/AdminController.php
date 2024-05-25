@@ -23,7 +23,7 @@ class AdminController extends Controller
         $collaboration->image=$imagename;
         $collaboration->name=$request->name;
         $collaboration->focal_person=$request->focal_person;
-        $collaboration->type=$request->type;
+        $collaboration->type=$request->type??'LoI';
         $collaboration->benefit=$request->benefit;
         $collaboration->start_date=$request->start_date;
         $collaboration->end_date=$request->end_date;
