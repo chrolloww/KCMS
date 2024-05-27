@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\JoinController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,5 +34,13 @@ Route::get('/add_collaboration_view', 'App\Http\Controllers\AdminController@addv
 
 Route::post('/upload_collaboration', 'App\Http\Controllers\AdminController@upload');
 
-Route::get('/userdashboard', 'App\Http\Controllers\HomeController@userdashboard');
+Route::get('/userdashboard', 'App\Http\Controllers\JoinController@display_collaboration_user');
+
+Route::get('/update_collaboration/{id}', 'App\Http\Controllers\JoinController@update_collaboration')->name('update_collaboration');
+
+Route::post('/edit_collaboration/{id}', 'App\Http\Controllers\JoinController@edit_collaboration')->name('edit_collaboration');
+
+Route::get('/cancel_update_collaboration', 'App\Http\Controllers\JoinController@cancel_update_collaboration')->name('cancel_update_collaboration');
+
+Route::get('/List_MoA', 'App\Http\Controllers\JoinController@display_collaboration_admin');
 

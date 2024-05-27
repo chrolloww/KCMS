@@ -1,9 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <!--css-->
-  @include('user.css')
 
+<head>
+  @include('user.css')
+  <style>
+
+        .div_deg
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* margin-top: 10px; */
+        }
+
+        .table_deg
+        {
+            border: 1px solid black;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th
+        {
+            background-color: skyblue;
+            color: black;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 15px;
+            border: 2px solid black;
+        }
+
+        td
+        {
+            
+            padding: 5px;
+            color: black;
+        }
+
+        input[type='search']
+        {
+          width: 500px;
+          height: 60px;
+          margin-left: 50px;
+        }
+
+        .collab_image 
+        {
+          width: 100px;
+          height: 100px;
+          /* object-fit: cover; Ensures the image remains square and covers the area */
+        }
+
+        .image_cell, .button_cell 
+        {
+          text-align: center;
+          vertical-align: middle;
+        }
+
+    </style>
 </head>
 <body>
 
@@ -64,6 +118,7 @@
 
             <x-app-layout>
             </x-app-layout>
+            
 
             @else
 
@@ -85,88 +140,209 @@
 
   </header>
 
+  <!-- Accordion Starts -->
+
   <ul class="accordian">
     <li>
         <input type="radio" name="accordion" id="first">
-        <label for="first">LETTER OF INTENT (LoI) </label>
+        <label for="first">Letter of Intent (LoI) </label>
         <div class="content">
-            <!--
-            <div class="container">
-            <div class="card-doctor">
-            <div class="header">
-              <img src="../assets/img/doctors/doctor_1.jpg" alt="">
-              <div class="meta">
-                <a href="#"><span class="mai-call"></span></a>
-                <a href="#"><span class="mai-logo-whatsapp"></span></a>
-              </div>
-            </div>
-            <div class="body">
-              <p class="text-xl mb-0">Dr. Stein Albert</p>
-              <span class="text-sm text-grey">Cardiology</span>
-            </div>
-            </div>
-        </div>-->
-        @foreach($collaboration as $collaborations)
           <table>
-            <tr>
+
+            <div class="div_deg">
+              <table class="table_deg">
+                <!-- <tr>
+                  <th>Image</th>
+                  <th>Title</th>
+                  <th>Focal Person</th>
+                  <th>Phone Number</th>
+                  <th>Update</th>
+                  <th>Details</th>
+                </tr> -->
+
+                @foreach($datas as $data)
+                @if($data->c_type == "LoI")
+
+                <tr>
+                  <td class="image_cell"><img class="collab_image" src="collabimages/{{$data->c_image}}" alt=""></td>
+                  <td><strong>{{$data->c_name}}</strong><br>{{$data->c_focal_person}}<br>{{$data -> s_phone_number}}</td>
+                  <td><strong>Duration Left:</strong><br>X days left</td>
+                  <td class="button_cell"><a class="btn btn-primary" href="{{url('update_collaboration',$data->id)}}">Update</a></td>
+                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="">Details</a></td>
+                </tr>
+
+                @endif
+                @endforeach
+              </table>
+            </div>
+
+            @foreach($datas as $data)
+            @if($data->c_type == "LoI")
+
+            <!-- <tr style = "height: 100px;">
+              <td>{{$loop -> iteration}}</td>
               <td>
               <div class="image">
-                <img width= "100 px"src="collabimages/{{$collaborations->image}}" alt="">
+                <img width= "100 px"src="collabimages/{{$data->c_image}}" alt="">
               </div>
               </td>
 
               <td>
-              <table>
+              <table >
                 <tr>
                   <div class="name">
-                  <p class="text-xl mb-0">{{$collaborations->name}}</p>
+                  <p class="text-xl mb-0">{{$data->c_name}}</p>
                 </div>
                 </tr>
                 <tr>
                   <td>
-                  <span class="text-sm text-grey">{{$collaborations->focal_person}}</span>
+                  <span class="text-sm text-grey">{{$data->c_focal_person}}</span>
                   </td>
                   <td>
-                  <span class="text-sm1 text-grey">123456789</span>
+                  <span class="text-sm1 text-grey">{{$data -> s_phone_number}}</span>
                   </td>
                 </tr>
               </table>
               </td>
               
-            </tr>
+            </tr> -->
+            @endif
+            @endforeach
           </table>
 
-        @endforeach
         </div>
     </li>
 
     <li>
         <input type="radio" name="accordion" id="second">
-        <label for="second">MoA</label>
+        <label for="second">Memoranda of Agreement (MoA)</label>
         <div class="content">
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quam rerum mollitia itaque quos officia et ratione corporis possimus. Ut, eum culpa! Commodi, facere blanditiis! Dolores accusamus non obcaecati voluptatibus. Voluptates!</p>
+          <table>
+
+          <div class="div_deg">
+              <table class="table_deg">
+
+             @foreach($datas as $data)
+             @if($data->c_type == "MoA")
+
+                <tr>
+                  <td class="image_cell"><img class="collab_image" src="collabimages/{{$data->c_image}}" alt=""></td>
+                  <td><strong>{{$data->c_name}}</strong><br>{{$data->c_focal_person}}<br>{{$data -> s_phone_number}}</td>
+                  <td><strong>Duration Left:</strong><br>X days left</td>
+                  <td class="button_cell"><a class="btn btn-primary" href="{{url('update_collaboration',$data->id)}}">Update</a></td>
+                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="">Details</a></td>
+                </tr>
+
+                @endif
+                @endforeach
+
+              </table>
+          </div>
+
+            @foreach($datas as $data)
+            @if($data->c_type == "MoA")
+
+            <!-- <tr style = "height: 100px;">
+              <td>{{$loop -> iteration}}</td>
+              <td>
+              <div class="image">
+                <img width= "100 px"src="collabimages/{{$data->c_image}}" alt="">
+              </div>
+              </td>
+
+              <td>
+              <table >
+                <tr>
+                  <div class="name">
+                  <p class="text-xl mb-0">{{$data->c_name}}</p>
+                </div>
+                </tr>
+                <tr>
+                  <td>
+                  <span class="text-sm text-grey">{{$data->c_focal_person}}</span>
+                  </td>
+                  <td>
+                  <span class="text-sm1 text-grey">{{$data -> s_phone_number}}</span>
+                  </td>
+                </tr>
+              </table>
+              </td>
+              
+            </tr> -->
+            @endif
+            @endforeach
+          </table>
+
         </div>
     </li>
 
     <li>
         <input type="radio" name="accordion" id="third">
-        <label for="third">MoU</label>
+        <label for="third">Memoranda of Understanding (MoU)</label>
         <div class="content">
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quam rerum mollitia itaque quos officia et ratione corporis possimus. Ut, eum culpa! Commodi, facere blanditiis! Dolores accusamus non obcaecati voluptatibus. Voluptates!</p>
+          <table>
+
+            @foreach($datas as $data)
+            @if($data->c_type == "MoU")
+
+            <!-- <tr style = "height: 100px;">
+              <td>{{$loop -> iteration}}</td>
+              <td>
+              <div class="image">
+                <img width= "100 px"src="collabimages/{{$data->c_image}}" alt="">
+              </div>
+              </td>
+
+              <td>
+              <table >
+                <tr>
+                  <div class="name">
+                  <p class="text-xl mb-0">{{$data->c_name}}</p>
+                </div>
+                </tr>
+                <tr>
+                  <td>
+                  <span class="text-sm text-grey">{{$data->c_focal_person}}</span>
+                  </td>
+                  <td>
+                  <span class="text-sm1 text-grey">{{$data -> s_phone_number}}</span>
+                  </td>
+                </tr>
+              </table>
+              </td>
+              
+            </tr> -->
+            @endif
+            @endforeach
+
+            <div class="div_deg">
+              <table class="table_deg">
+
+             @foreach($datas as $data)
+             @if($data->c_type == "MoU")
+
+                <tr>
+                  <td class="image_cell"><img class="collab_image" src="collabimages/{{$data->c_image}}" alt=""></td>
+                  <td><strong>{{$data->c_name}}</strong><br>{{$data->c_focal_person}}<br>{{$data -> s_phone_number}}</td>
+                  <td><strong>Duration Left:</strong><br>X days left</td>
+                  <td class="button_cell"><a class="btn btn-primary" href="{{url('update_collaboration',$data->id)}}">Update</a></td>
+                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="">Details</a></td>
+                </tr>
+
+                @endif
+                @endforeach
+
+              </table>
+          </div>
+
+          </table>
+
         </div>
     </li>
   </ul>
 
+  <!-- Accordion Ends -->
 
-<script src="../assets/js/jquery-3.5.1.min.js"></script>
-
-<script src="../assets/js/bootstrap.bundle.min.js"></script>
-
-<script src="../assets/vendor/owl-carousel/js/owl.carousel.min.js"></script>
-
-<script src="../assets/vendor/wow/wow.min.js"></script>
-
-<script src="../assets/js/theme.js"></script>
-  
+@include('user.script')
 </body>
 </html>
