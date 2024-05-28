@@ -12,6 +12,7 @@ class JoinController extends Controller
 {
     function display_collaboration_user()
     {
+        $userPhoneNumber = auth()->user()->phone_number;
         
         $try = DB::table('staffs')->get();
         $datas = DB::table('staffs')

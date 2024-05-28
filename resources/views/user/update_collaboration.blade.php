@@ -3,88 +3,85 @@
 
 <head>
   @include('user.css')
+  
   <style>
 
-        .div_deg
-        {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* margin-top: 10px; */
-        }
+    .container1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 20px;
+    }
 
-        label
-        {
-            display: inline-block;
-            width: 200px;
-            padding: 20px;
-        }
+    .form-box {
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        width: 60%;
+        max-width: 800px;
+    }
 
-        input[type='text']
-        {
-            width: 300px;
-            height: 60px;
-        }
+    .form-box h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
 
-        textarea
-        {
-            width: 450px;
-            height: 80px;
-        }
+    .image-display {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
 
-        .collab_image 
-        {
-          width: 100px;
-          height: 100px;
-          /* object-fit: cover; Ensures the image remains square and covers the area */
-        }
+    .image-display img {
+        width: 200px;
+        height: auto;
+    }
 
-        .image_cell, .button_cell 
-        {
-          text-align: center;
-          vertical-align: middle;
-        }
+    .form-content {
+        text-align: center;
+        margin-bottom: 20px;
+    }
 
-		.container1 
-		{
-    		display: flex;
-    		justify-content: center;
-    		align-items: center;
-    		width: 100%;
-    		padding: 20px;
-		}
+    .form-content h1 {
+        margin: 5px 0;
+        font-size: 15
+    }
 
-		.form-box 
-		{
-    		background: white;
-    		border: 1px solid #ccc;
-    		border-radius: 8px;
-    		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    		padding: 20px;
-    		width: 60%;
-		}
+    .form-group {
+        margin-bottom: 20px;
+        text-align: center;
+    }
 
-		.form-group input[readonly] 
-		{
-    		background-color: #e9ecef;
-    		color: #6c757d;
-    		cursor: not-allowed;
-		}
+    .form-group label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
 
-		.image-display
-		{
-			width: 200px;
-        	height: 200px;
-			justify-content: center; /* Centers the image horizontally */
-    		align-items: center; /* Centers the image vertically */
-    		border: 1px solid black; /* Optional: for visual confirmation of the container */
-		}
+    .form-group select {
+        width: 60%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
 
+    .form-actions {
+        text-align: center;
+    }
+
+    
 </style>
 </head>
 <body>
 
-  <!-- Back to top button -->
+<!-- Back to top button -->
   <div class="back-to-top"></div>
 
   <header>
@@ -163,52 +160,44 @@
 
   </header>
 
-	<div class="container1">
-	<div class="form-box">
-  	<h1 style="text-align: center"><strong>Update Collaboration</strong></h1>
+  <div class="container1">
+    <div class="form-box">
+        <h1><strong>Update Collaboration</strong></h1>
+        <div class="image-display">
+            <img src="/collabimages/{{$data->c_image}}" alt="Collaboration Image">
+        </div>
 
-            <div class="div_deg">
-                <form action="{{url('edit_collaboration',$data->id)}}" method="post" enctype="multipart/form-data">
-                    @csrf
-					<div class="image-display">
-						<image src="/collabimages/{{$data->c_image}}">
-					</div>
-					<br><br><br>
-					<h1>{{$data->c_name}}</h1>
-					<h1>{{$data->c_focal_person}}</h1>
-					<h1>{{$data->s_phone_number}}</h1>
-					<br><br><br>
+        <div class="form-content">
+            <h1>{{$data->c_name}}</h1>
+            <h1>{{$data->c_focal_person}}</h1>
+            <h1>{{$data->s_phone_number}}</h1>
+        </div>
 
-                    <div>
-                        <label>Category</label>
-                        <select name="c_type">
-                            <option value="{{$data->c_type}}">{{$data->c_type}}</option>                           
-                            <option value="MoA">MoA</option>
-							<option value="MoU">MoU</option>      
-                        </select> 
-                    </div>
-
-                    <div>
-                        <label>Current Image</label>
-                        <image width="150" src="">
-                    </div>
-
-                    <div>
-                        <label>New Image</label>
-                        <input type="file" name="image">
-                    </div>
-
-                    <div>
-                        <input class="btn btn-success" type="submit" value="Update Collaboration">
-						<!-- <a class="btn btn-secondary" href="{{url('cancel_update_collaboration')}}">Cancel</a> -->
-						<button class="btn btn-secondary" type="button" onclick="cancelUpdate()">Cancel</button>
-                    </div>
-                </form>
+        <form action="{{url('edit_collaboration', $data->id)}}" method="post" enctype="multipart/form-data">
+            @csrf
+            <div class="form-group">
+                <!-- <label for="c_type">Category</label> -->
+                <select name="c_type" id="c_type">
+                    <option value="{{$data->c_type}}">{{$data->c_type}}</option>
+                    <option value="MoA">MoA</option>
+                    <option value="MoU">MoU</option>
+                </select>
             </div>
 
-	</div>
-	</div>
+            <div class="form-actions">
+                <input class="btn btn-success" type="submit" value="Update Collaboration">
+                <button class="btn btn-secondary" type="button" onclick="cancelUpdate()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
 
+  <script>
+    function cancelUpdate() 
+    {
+        window.location.href = "{{url('cancel_update_collaboration')}}";
+    }
+  </script>
 @include('user.script')
 <script>
     function cancelUpdate() {
