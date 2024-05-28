@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\JoinController;
+use App\Http\Controllers\pdfController;
+use App\Http\Controllers\ArchiveController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,9 +34,50 @@ Route::middleware([
 
 Route::get('/add_collaboration_view', 'App\Http\Controllers\AdminController@addview');
 
+Route::get('/add_staff_view', 'App\Http\Controllers\AdminController@addview_staff');
+
 Route::post('/upload_collaboration', 'App\Http\Controllers\AdminController@upload');
+
+Route::post('/upload_staff', 'App\Http\Controllers\AdminController@upload_staff');
 
 Route::get('/userdashboard', 'App\Http\Controllers\JoinController@display_collaboration_user');
 
-Route::get('/List_MoA', 'App\Http\Controllers\JoinController@display_collaboration_admin');
+Route::get('/List_MoA', 'App\Http\Controllers\JoinController@display_collaboration_admin_MoA');
 
+Route::get('/List_MoU', 'App\Http\Controllers\JoinController@display_collaboration_admin_MoU');
+
+Route::get('/List_LoI', 'App\Http\Controllers\JoinController@display_collaboration_admin_LoI');
+
+Route::get('/fyp1/collaborations/', 'App\Http\Controllers\JoinController@details_Active_LoI');
+
+Route::get('/collaborations_{name}', [JoinController::class, 'details_Active_LoI']);
+
+Route::get('/collaborations_LoI_{name}', [JoinController::class, 'details_Active_LoI_new']);
+
+Route::get('/view_file_{name}', [PdfController::class, 'view_pdf'])->name('file.details');
+
+Route::delete('/file-delete/{id}', 'App\Http\Controllers\PdfController@delete')->name('file.delete');
+
+Route::post('/view_file_{name}', 'App\Http\Controllers\PdfController@store')->name('file.store');
+
+Route::post('/terminate_{c_name}', 'App\Http\Controllers\JoinController@terminate')->name('file.terminate');
+
+Route::get('/file-view/{id}', 'App\Http\Controllers\PdfController@view_tab')->name('file.view');
+
+Route::get('/Archived_List_MoA', 'App\Http\Controllers\ArchiveController@display_collaboration_admin_MoA');
+
+Route::get('/Archived_List_MoU', 'App\Http\Controllers\ArchiveController@display_collaboration_admin_MoU');
+
+Route::get('/Archived_List_LoI', 'App\Http\Controllers\ArchiveController@display_collaboration_admin_LoI');
+
+Route::get('/Archived_List_Terminate', 'App\Http\Controllers\ArchiveController@display_collaboration_admin_Terminate');
+
+Route::get('/collaborations_terminate_{name}', 'App\Http\Controllers\ArchiveController@details_expired');
+
+Route::get('/update_collaboration/{id}', 'App\Http\Controllers\JoinController@update_collaboration')->name('update_collaboration');
+
+Route::post('/edit_collaboration/{id}', 'App\Http\Controllers\JoinController@edit_collaboration')->name('edit_collaboration');
+
+Route::get('/cancel_update_collaboration', 'App\Http\Controllers\JoinController@cancel_update_collaboration')->name('cancel_update_collaboration');
+
+Route::get('/List_MoA', 'App\Http\Controllers\JoinController@display_collaboration_admin');

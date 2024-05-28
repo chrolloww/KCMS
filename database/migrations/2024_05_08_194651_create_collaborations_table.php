@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('c_benefit');
             $table->string('c_start_date');
             $table->string('c_end_date');
-            $table->string('c_image');
+            $table->string('c_image') -> nullable();
+            $table->string('c_status') -> nullable();
             $table->timestamps();
         });
     }

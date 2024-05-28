@@ -37,16 +37,4 @@ class HomeController extends Controller
             return view('user.home');
         }
     }
-
-    /*public function userdashboard()
-    {
-        $collaborations = Collaboration::with('staff')->get();
-        $staffs = Staff::with('collaborations')->get();
-        
-        return view('user.userdashboard', compact('collaborations', 'staffs'));
-    }*/
-
-    
-
-    
 }
