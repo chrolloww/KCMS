@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Collaboration;
 use App\Models\Document;
 use App\Models\Staff;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -18,6 +19,37 @@ class AdminController extends Controller
     public function addview_staff()
     {
         return view('admin.staff.add_staff');
+    }
+
+    public function listview_staff()
+    {
+        $datas = DB::table('staffs')
+            ->leftjoin('collaborations','staffs.s_staff_id', '=', 'collaborations.c_focal_person')
+            ->join('users', 'staffs.s_staff_id', '=', 'users.staff_id')
+            ->select('staffs.s_staff_id', 'staffs.s_name', 'staffs.s_email', DB::raw('count(collaborations.c_focal_person) as total_collaboration'))
+            ->where('users.usertype', '!=', 1)
+            ->groupBy('staffs.s_staff_id', 'staffs.s_name', 'staffs.s_email')
+            ->get();
+
+        //return dd($datas);
+        return view('admin.staff.list_staff',compact('datas'));
+    }
+
+    public function details_view($id)
+    {
+        $datas = DB::table('staffs')
+            ->leftjoin('collaborations','staffs.s_staff_id', '=', 'collaborations.c_focal_person')
+            ->join('users', 'staffs.s_staff_id', '=', 'users.staff_id')
+            ->select('staffs.*', 'collaborations.*')
+            ->get()
+            ->map(function ($item) {
+                $endDate = Carbon::parse($item->c_end_date);
+                $item->duration_left = Carbon::now()->diffInDays($endDate, false); // Calculate days left
+                return $item;
+            });
+
+        //return dd($datas);
+        return view('admin.staff.details_staff',compact('datas'));
     }
 
     public function upload(Request $request)

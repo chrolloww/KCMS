@@ -46,7 +46,7 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{'home'}}"><i class="bi bi-house-door"></i></a></li>
-          <li class="breadcrumb-item"><a href="#">Collaborations/a></li>
+          <li class="breadcrumb-item">Collaborations</a></li>
           <li class="breadcrumb-item active">Details</li>
           <li class="breadcrumb-item active">Document</li>
         </ol>
@@ -76,9 +76,9 @@
         @foreach($datas as $data)
         <div class="shows" align = "center">
         <img width= "100 px"src="collabimages/pdf_logo.png">
-        <a href="{{ route('file.view', $data->id) }}" target="_blank">{{$data -> d_document_name}}</a>
+        <a href="{{ route('file.view', $data->c_name) }}" target="_blank">{{$data -> d_document_name}}</a>
         <p></p>
-            <form action="{{ route('file.delete', $data->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this file?');">
+            <form action="{{ route('file.delete', $data->c_name) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this file?');">
               @csrf
               @method('DELETE')
               <button type="submit" class="btn btn-danger">Delete File</button>
@@ -86,7 +86,7 @@
         </div>      
         @endforeach  
       </div>
-      <button type="button" class="btn btn-secondary btn-lg rounded-circle position-fixed" style="bottom: 70px; right: 50px;" data-toggle="modal" data-target="#uploadModal">
+      <button type="button" class="btn btn-primary btn-lg rounded-circle position-fixed" style="bottom: 70px; right: 50px;" data-toggle="modal" data-target="#uploadModal">
         <i class="fas fa-plus"></i>
       </button>
       
@@ -101,7 +101,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('file.store', $data -> d_collaboration_name) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('file.store', $data -> c_name) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="file">Choose File</label>

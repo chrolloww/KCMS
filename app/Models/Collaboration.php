@@ -17,6 +17,7 @@ class Collaboration extends Model
         'c_benefit',
         'c_start_date',
         'c_end_date',
+        'c_description',
         'c_image',
         'c_status',
     ];

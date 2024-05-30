@@ -33,8 +33,15 @@
       text-align: left;
       border-bottom: 1px solid #ddd;
     }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
   </style>
-    @include('admin.css')
+  @include('admin.css')
+  
 
 </head>
 
@@ -60,19 +67,19 @@
           <li class="breadcrumb-item active">Details</li>
         </ol>
       </nav>
-
+      <div id = "content">
       <div class="section" style = "width: auto;">
         <table>
-          @foreach($details -> slice(0,1) as $data)          
+          @foreach($details -> slice(0,1) as $data)       
           <tr style = "height: 100px;">
-            <td style = "width: 350px;">
+            <td style = "width: 200px;">
               <div class="image">
-              <img width= "300 px"src="collabimages/{{$data->c_image}}" alt="">
+              @if($data->c_image == null)
+              <img width= "180 px"src="collabimages/not_found.jpg" alt="">
 
-              <form action="{{ route('file.terminate', [$data->c_name]) }}" method="POST" onsubmit="return confirm('Are you sure you want to terminate this collaboration?');">
-              @csrf
-              <button type="submit" class="btn btn-danger">TERMINATE</button>
-            </form>
+              @else
+              <img width= "180 px"src="collabimages/{{$data->c_image}}" alt="">
+              @endif
               </div>
             </td>
 
@@ -88,7 +95,9 @@
                   <td>
                     <span class="text-sm text-grey" style = "font-size: 15px;">{{$data-> s_name}}</span>
                   </td>
-          
+                </tr>
+
+                <tr>
                   <td>
                     <span class="text-sm text-grey" style = "font-size: 15px;">({{$data -> s_email}})</span>
                   </td>
@@ -109,8 +118,13 @@
                 </tr>
 
                 <tr>
-                  <td> 
+                  <td>
+                  @if($data->c_status == 'TERMINATE')
+                  <span class="text-sm text-grey" style = "font-size: 15px;">Terminated</span>
+
+                  @else
                   <span class="text-sm text-grey" style = "font-size: 15px;">{{$data -> c_benefit}}</span>
+                  @endif
                   </td>
                 </tr>
               </table>
@@ -122,6 +136,9 @@
                   <div class="name">
                     <table>
                       <tr>
+                      <span class="text-sm text-grey" style = "font-size: 15px;">Remaining Time:</span>
+                      </tr>
+                      <tr>
                       @if($data->duration_left > 360)
                         @php
                           $duration = intval($data->duration_left / 360);
@@ -130,7 +147,7 @@
                         <p style="color: green; font-size: 60px;"><strong>{{$duration}}</strong></p>
                         </td>
                         <td>
-                          <p style="color: green;"><strong>yr</strong></p>
+                          <p style="color: green; margin-left: 10px;"><strong>year</strong></p>
                         </td>
                       </tr>
                     </table>
@@ -147,13 +164,13 @@
                           <p style="color: green; font-size: 60px;"><strong>{{$duration}}</strong></p>
                         </td>
                         <td>
-                            <p style="color: green;"><strong>mth</strong></p>
+                            <p style="color: green; margin-left: 10px;"><strong>mth</strong></p>
                         </td>
                             @else
                             <p style="color: red; font-size: 60px;"><strong>{{$duration}}</strong></p>
                         </td>
                         <td>
-                            <p style="color: red;"><strong>mth</strong></p>
+                            <p style="color: red; margin-left: 10px;"><strong>month</strong></p>
                             @endif
                         </td>
                       </tr>
@@ -166,7 +183,7 @@
                         <p style="color: yello; font-size: 60px;"><strong>{{$data->duration_left}}</strong></p>
                         </td>
                         <td>
-                          <p style="color: red;"><strong>day</strong></p>
+                          <p style="color: red; margin-left: 10px;"><strong>day</strong></p>
                         </td>
                       </tr>
                     </table>
@@ -214,6 +231,7 @@
           </thead>
 
         @foreach($details as $data)
+        @if($data->a_activity_name!= null)
         <tbody>
           <tr>
             <td>
@@ -234,14 +252,20 @@
             </td>
           </tr>
         </tbody>
-
+        @endif
         @endforeach
         </table>
 
-      </div>
-
-      
+      </div>      
     </div>
+    <div class="d-flex justify-content-between align-items-center">
+        <form action="{{ route('file.terminate', [$data->c_name]) }}" method="POST" onsubmit="return confirm('Are you sure you want to terminate this collaboration?');">
+          @csrf
+          <button type="submit" class="btn btn-danger" data-toggle='modal' data-target="#deleteModal" style="width: 110px; height: 40px; font-size: 15px; align-self: flex-start;" >TERMINATE</button>
+        </form>
+
+        <button id="downloadPdf" class="btn btn-secondary" style="width: 110px; height: 40px; font-size: 15px; align-self: flex-end;">Print</button>
+      </div>
   </div>
   </main>
   <!-- End #main -->
@@ -263,6 +287,38 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
+
+  <script>
+    var details = <?php echo json_encode($details); ?>;
+    document.getElementById('downloadPdf').addEventListener('click', function () {
+      const { jsPDF } = window.jspdf;
+      const content = document.getElementById('content');
+
+      if (content) {
+        html2canvas(content, { scale: 2 }).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const imgProps = pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+            details.forEach((data, index) => {
+                    pdf.text(20, 20 + (index * 10), 'Collaboration Name: ' + data.c_name);
+                    // Add more fields as needed
+                });
+
+            pdf.save('collaboration_details.pdf');
+        }).catch(err => {
+            console.error('Error capturing content:', err);
+          });
+      } 
+      else {
+        console.error('Content element not found');
+      }
+    });
+  </script>
 
   @include('admin.script')
 

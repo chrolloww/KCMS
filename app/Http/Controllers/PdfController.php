@@ -12,10 +12,11 @@ class PdfController extends Controller
 {
     public function view_pdf($c_name) {
 
-        $try = DB::table('collaborations')->get();
         $datas = DB::table('collaborations')
             ->join('documents', 'collaborations.c_name', '=', 'documents.d_collaboration_name')
-            ->select('collaborations.*', 'documents.*')
+            ->where('collaborations.c_name', $c_name)
+            ->select('collaborations.c_name', 'documents.d_document_name')
+            ->groupBy('collaborations.c_name', 'documents.d_document_name')
             ->orderBy('documents.d_document_name', 'desc')
             ->get();
 
@@ -25,7 +26,7 @@ class PdfController extends Controller
         }
 
         //return dd($datas);
-        return view('admin.list_collaboration.view_pdf', compact('try', 'datas'));
+        return view('admin.list_collaboration.view_pdf', compact( 'datas'));
     }
 
     public function store(Request $request)
@@ -48,9 +49,9 @@ class PdfController extends Controller
         return redirect()->back()->with('success', 'File uploaded successfully');
     }
 
-    public function delete($id)
+    public function delete($c_name)
     {
-        $document = Document::findOrFail($id);
+        $document = Document::findOrFail($c_name);
 
         if ($document->file_path && Storage::exists($document->file_path)) {
             Storage::delete($document->file_path);
@@ -61,9 +62,9 @@ class PdfController extends Controller
         return redirect()->back()->with('success', 'File and record deleted successfully');
     }
 
-    public function view_tab($id)
+    public function view_tab($c_name)
     {
-        $file = Document::where('id', $id)->value('d_document_name');
+        $file = Document::where('c_name', $c_name)->value('d_document_name');
 
         if (!$file) {
             bort(404, 'PDF file not found');

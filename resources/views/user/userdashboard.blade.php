@@ -15,7 +15,7 @@
 
         .table_deg
         {
-            border: 1px solid black;
+            
             width: 100%;
             border-collapse: collapse;
         }
@@ -27,7 +27,7 @@
             font-size: 15px;
             font-weight: bold;
             padding: 15px;
-            border: 2px solid black;
+            border: 0.5px solid black;
         }
 
         td
@@ -65,7 +65,7 @@
   <div class="back-to-top"></div>
 
   <header>
-    <div class="topbar">
+    <!-- <div class="topbar">
       <div class="container">
         <div class="row">
           <div class="col-sm-8 text-sm">
@@ -83,9 +83,9 @@
               <a href="#"><span class="mai-logo-instagram"></span></a>
             </div>
           </div>
-        </div> <!-- .row -->
-      </div> <!-- .container -->
-    </div> <!-- .topbar -->
+        </div> 
+      </div> 
+    </div>  -->
 
     <!-- Nav -->
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
@@ -99,11 +99,11 @@
         <div class="" id="navbarSupport">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="{{'/'}}">Home</a>
+              <a class="nav-link active" href="{{'/'}}">Home</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link" href="about.html">Collaboration</a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a class="nav-link" href="blog.html">Announcement</a>
             </li>
@@ -111,10 +111,6 @@
             @if(Route::has('login'))
 
             @auth
-
-            <li class="nav-item">
-              <a class="nav-link active" href="{{'userdashboard'}}">Dashboard</a>
-            </li>
 
             <x-app-layout>
             </x-app-layout>
@@ -151,24 +147,19 @@
 
             <div class="div_deg">
               <table class="table_deg">
-                <!-- <tr>
-                  <th>Image</th>
-                  <th>Title</th>
-                  <th>Focal Person</th>
-                  <th>Phone Number</th>
-                  <th>Update</th>
-                  <th>Details</th>
-                </tr> -->
-
                 @foreach($datas as $data)
                 @if($data->c_type == "LoI")
 
                 <tr>
-                  <td class="image_cell"><img class="collab_image" src="collabimages/{{$data->c_image}}" alt=""></td>
+                  @if(isset($data) && $data->c_image)
+                  <td class="image_cell"><img class="collab_image" src="/collabimages/{{$data->c_image}}" alt=""></td>
+                  @else
+                  <td class="image_cell"><img class="collab_image" src="/collabimages/not_found.jpg" alt=""></td>
+                  @endif
                   <td><strong>{{$data->c_name}}</strong><br>{{$data->c_focal_person}}<br>{{$data -> s_email}}</td>
-                  <td><strong>Duration Left:</strong><br>X days left</td>
+                  @include('user.view_details')
                   <td class="button_cell"><a class="btn btn-primary" href="{{url('update_collaboration',$data->id)}}">Update</a></td>
-                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="">Details</a></td>
+                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="{{ route('collaboration.details', $data->id)}}">Details</a></td>
                 </tr>
 
                 @endif
@@ -176,38 +167,6 @@
               </table>
             </div>
 
-            @foreach($datas as $data)
-            @if($data->c_type == "LoI")
-
-            <!-- <tr style = "height: 100px;">
-              <td>{{$loop -> iteration}}</td>
-              <td>
-              <div class="image">
-                <img width= "100 px"src="collabimages/{{$data->c_image}}" alt="">
-              </div>
-              </td>
-
-              <td>
-              <table >
-                <tr>
-                  <div class="name">
-                  <p class="text-xl mb-0">{{$data->c_name}}</p>
-                </div>
-                </tr>
-                <tr>
-                  <td>
-                  <span class="text-sm text-grey">{{$data->c_focal_person}}</span>
-                  </td>
-                  <td>
-                  <span class="text-sm1 text-grey">{{$data -> s_phone_number}}</span>
-                  </td>
-                </tr>
-              </table>
-              </td>
-              
-            </tr> -->
-            @endif
-            @endforeach
           </table>
 
         </div>
@@ -226,11 +185,15 @@
              @if($data->c_type == "MoA")
 
                 <tr>
-                  <td class="image_cell"><img class="collab_image" src="collabimages/{{$data->c_image}}" alt=""></td>
-                  <td><strong>{{$data->c_name}}</strong><br>{{$data->c_focal_person}}<br>{{$data -> s_phone_number}}</td>
-                  <td><strong>Duration Left:</strong><br>X days left</td>
+                  @if(isset($data) && $data->c_image)
+                  <td class="image_cell"><img class="collab_image" src="/collabimages/{{$data->c_image}}" alt=""></td>
+                  @else
+                  <td class="image_cell"><img class="collab_image" src="/collabimages/not_found.jpg" alt=""></td>
+                  @endif
+                  <td><strong>{{$data->c_name}}</strong><br>{{$data->c_focal_person}}<br>{{$data -> s_email}}</td>
+                  @include('user.view_details')
                   <td class="button_cell"><a class="btn btn-primary" href="{{url('update_collaboration',$data->id)}}">Update</a></td>
-                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="">Details</a></td>
+                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="{{ route('collaboration.details', $data->id)}}">Details</a></td>
                 </tr>
 
                 @endif
@@ -239,38 +202,6 @@
               </table>
           </div>
 
-            @foreach($datas as $data)
-            @if($data->c_type == "MoA")
-
-            <!-- <tr style = "height: 100px;">
-              <td>{{$loop -> iteration}}</td>
-              <td>
-              <div class="image">
-                <img width= "100 px"src="collabimages/{{$data->c_image}}" alt="">
-              </div>
-              </td>
-
-              <td>
-              <table >
-                <tr>
-                  <div class="name">
-                  <p class="text-xl mb-0">{{$data->c_name}}</p>
-                </div>
-                </tr>
-                <tr>
-                  <td>
-                  <span class="text-sm text-grey">{{$data->c_focal_person}}</span>
-                  </td>
-                  <td>
-                  <span class="text-sm1 text-grey">{{$data -> s_phone_number}}</span>
-                  </td>
-                </tr>
-              </table>
-              </td>
-              
-            </tr> -->
-            @endif
-            @endforeach
           </table>
 
         </div>
@@ -281,40 +212,6 @@
         <label for="third">Memoranda of Understanding (MoU)</label>
         <div class="content">
           <table>
-
-            @foreach($datas as $data)
-            @if($data->c_type == "MoU")
-
-            <!-- <tr style = "height: 100px;">
-              <td>{{$loop -> iteration}}</td>
-              <td>
-              <div class="image">
-                <img width= "100 px"src="collabimages/{{$data->c_image}}" alt="">
-              </div>
-              </td>
-
-              <td>
-              <table >
-                <tr>
-                  <div class="name">
-                  <p class="text-xl mb-0">{{$data->c_name}}</p>
-                </div>
-                </tr>
-                <tr>
-                  <td>
-                  <span class="text-sm text-grey">{{$data->c_focal_person}}</span>
-                  </td>
-                  <td>
-                  <span class="text-sm1 text-grey">{{$data -> s_phone_number}}</span>
-                  </td>
-                </tr>
-              </table>
-              </td>
-              
-            </tr> -->
-            @endif
-            @endforeach
-
             <div class="div_deg">
               <table class="table_deg">
 
@@ -322,11 +219,15 @@
              @if($data->c_type == "MoU")
 
                 <tr>
-                  <td class="image_cell"><img class="collab_image" src="collabimages/{{$data->c_image}}" alt=""></td>
-                  <td><strong>{{$data->c_name}}</strong><br>{{$data->c_focal_person}}<br>{{$data -> s_phone_number}}</td>
-                  <td><strong>Duration Left:</strong><br>X days left</td>
+                  @if(isset($data) && $data->c_image)
+                  <td class="image_cell"><img class="collab_image" src="/collabimages/{{$data->c_image}}" alt=""></td>
+                  @else
+                  <td class="image_cell"><img class="collab_image" src="/collabimages/not_found.jpg" alt=""></td>
+                  @endif
+                  <td><strong>{{$data->c_name}}</strong><br>{{$data->c_focal_person}}<br>{{$data -> s_email}}</td>
+                  @include('user.view_details')
                   <td class="button_cell"><a class="btn btn-primary" href="{{url('update_collaboration',$data->id)}}">Update</a></td>
-                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="">Details</a></td>
+                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="{{ route('collaboration.details', $data->id)}}">Details</a></td>
                 </tr>
 
                 @endif

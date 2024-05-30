@@ -1,5 +1,5 @@
 <h2>{{ $data->c_name }}</h2>
-<p>Focal Person: {{ $data->c_focal_person }}<span class="space-me">({{ $data->s_email }})</span></p>
+<p>{{ $data->s_name }}<span class="space-me">({{ $data->s_email }})</span></p>
 
 @if($data->duration_left > 360)
     @php
