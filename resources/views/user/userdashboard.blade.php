@@ -148,7 +148,7 @@
             <div class="div_deg">
               <table class="table_deg">
                 @foreach($datas as $data)
-                @if($data->c_type == "LoI")
+                @if($data->c_type == "LoI" && $data->duration_left > 0 && $data->c_status != 'TERMINATE')
 
                 <tr>
                   @if(isset($data) && $data->c_image)
@@ -159,7 +159,7 @@
                   <td><strong>{{$data->c_name}}</strong><br>{{$data->c_focal_person}}<br>{{$data -> s_email}}</td>
                   @include('user.view_details')
                   <td class="button_cell"><a class="btn btn-primary" href="{{url('update_collaboration',$data->id)}}">Update</a></td>
-                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="{{ route('collaboration.details', $data->id)}}">Details</a></td>
+                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="{{ route('user.detail', $data->c_name)}}">Details</a></td>
                 </tr>
 
                 @endif
@@ -182,7 +182,7 @@
               <table class="table_deg">
 
              @foreach($datas as $data)
-             @if($data->c_type == "MoA")
+             @if($data->c_type == "MoA" && $data->duration_left > 0 && $data->c_status != 'TERMINATE')  
 
                 <tr>
                   @if(isset($data) && $data->c_image)
@@ -193,7 +193,7 @@
                   <td><strong>{{$data->c_name}}</strong><br>{{$data->c_focal_person}}<br>{{$data -> s_email}}</td>
                   @include('user.view_details')
                   <td class="button_cell"><a class="btn btn-primary" href="{{url('update_collaboration',$data->id)}}">Update</a></td>
-                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="{{ route('collaboration.details', $data->id)}}">Details</a></td>
+                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="{{ route('user.detail', $data->c_name)}}">Details</a></td>
                 </tr>
 
                 @endif
@@ -216,7 +216,7 @@
               <table class="table_deg">
 
              @foreach($datas as $data)
-             @if($data->c_type == "MoU")
+             @if($data->c_type == "MoU" && $data->duration_left > 0 && $data->c_status != 'TERMINATE')
 
                 <tr>
                   @if(isset($data) && $data->c_image)
@@ -227,7 +227,7 @@
                   <td><strong>{{$data->c_name}}</strong><br>{{$data->c_focal_person}}<br>{{$data -> s_email}}</td>
                   @include('user.view_details')
                   <td class="button_cell"><a class="btn btn-primary" href="{{url('update_collaboration',$data->id)}}">Update</a></td>
-                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="{{ route('collaboration.details', $data->id)}}">Details</a></td>
+                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="{{ route('user.detail', $data->c_name)}}">Details</a></td>
                 </tr>
 
                 @endif

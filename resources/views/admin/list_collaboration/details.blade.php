@@ -105,7 +105,10 @@
 
                 <tr>
                   <td style = "width: auto;">
-                  @if($data->c_type == 'LoI')
+                  @if($data->c_status == 'TERMINATE')
+                  <span class="text-sm text-grey" style = "font-size: 15px; color: red;"><strong>TERMINATED</strong></span>
+
+                  @elseif($data->c_type == 'LoI')
                   <span class="text-sm text-grey" style = "font-size: 15px;">Letter of Intent (LoI)</span>
 
                   @elseif($data->c_type == 'MoA')
@@ -114,13 +117,14 @@
                   @else
                   <span class="text-sm text-grey" style = "font-size: 15px;">Memorandum of Understanding (MoU)</span>
                   @endif
+                  
                   </td>
                 </tr>
 
                 <tr>
                   <td>
                   @if($data->c_status == 'TERMINATE')
-                  <span class="text-sm text-grey" style = "font-size: 15px;">Terminated</span>
+                  <span class="text-sm text-grey" style = "font-size: 15px;">{{$data -> c_description}}</span>
 
                   @else
                   <span class="text-sm text-grey" style = "font-size: 15px;">{{$data -> c_benefit}}</span>
@@ -217,9 +221,9 @@
           </tr>
           @endforeach
         </table>
-      </div>
-
-      <div class="table-container">
+      </div>   
+    </div>
+    <div class="table-container">
         <table id = "table_list_activity">
         <thead>
           <tr>
@@ -248,7 +252,7 @@
             </td>
 
             <td>
-            {{$data -> a_activity_description}}
+            {{$data -> a_activity_PIC}}
             </td>
           </tr>
         </tbody>
@@ -256,13 +260,15 @@
         @endforeach
         </table>
 
-      </div>      
-    </div>
+      </div>   
+      
+    @if($data->c_status != 'TERMINATE')
     <div class="d-flex justify-content-between align-items-center">
         <form action="{{ route('file.terminate', [$data->c_name]) }}" method="POST" onsubmit="return confirm('Are you sure you want to terminate this collaboration?');">
           @csrf
           <button type="submit" class="btn btn-danger" data-toggle='modal' data-target="#deleteModal" style="width: 110px; height: 40px; font-size: 15px; align-self: flex-start;" >TERMINATE</button>
         </form>
+    @endif
 
         <button id="downloadPdf" class="btn btn-secondary" style="width: 110px; height: 40px; font-size: 15px; align-self: flex-end;">Print</button>
       </div>
@@ -273,14 +279,7 @@
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      &copy; Copyright <strong><span>KICT_IIUM</span></strong>. All Rights Reserved
     </div>
   </footer><!-- End Footer -->
 
@@ -290,33 +289,53 @@
 
   <script>
     var details = <?php echo json_encode($details); ?>;
+
     document.getElementById('downloadPdf').addEventListener('click', function () {
-      const { jsPDF } = window.jspdf;
-      const content = document.getElementById('content');
+        const { jsPDF } = window.jspdf;
+        const content = document.getElementById('content');
 
-      if (content) {
-        html2canvas(content, { scale: 2 }).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('p', 'mm', 'a4');
-            const imgProps = pdf.getImageProperties(imgData);
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        if (content) {
+            html2canvas(content, { scale: 2 }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const imgProps = pdf.getImageProperties(imgData);
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
 
-            details.forEach((data, index) => {
-                    pdf.text(20, 20 + (index * 10), 'Collaboration Name: ' + data.c_name);
-                    // Add more fields as needed
+                // Prepare table data
+                const tableColumn = ["Date", "Activity Name", "Description", "Person-in-charge (PIC)"];
+                const tableRows = details.map(item => [
+                  moment(item.created_at).format('DD/MM/YYYY'),
+                    item.a_activity_name,
+                    item.a_activity_description,
+                    item.a_activity_PIC
+                ]);
+
+                // Calculate the starting point for the table
+                let startY = pdfHeight + 20; // Adding space after the image
+
+                // Check if the table will fit on the current page, otherwise add a new page
+                if (startY + (tableRows.length * 10) > pdf.internal.pageSize.getHeight() - 10) {
+                    pdf.addPage();
+                    startY = 20; // Reset startY to the top of the new page
+                }
+
+                // Adding table to the PDF
+                pdf.autoTable({
+                    startY: startY,
+                    head: [tableColumn],
+                    body: tableRows
                 });
 
-            pdf.save('collaboration_details.pdf');
-        }).catch(err => {
-            console.error('Error capturing content:', err);
-          });
-      } 
-      else {
-        console.error('Content element not found');
-      }
+                pdf.save('collaboration_details.pdf');
+            }).catch(err => {
+                console.error('Error capturing content:', err);
+            });
+        } else {
+            console.error('Content element not found');
+        }
     });
   </script>
 

@@ -78,6 +78,7 @@
 
         <tbody>
             @foreach($datas as $data)
+            @if($data->c_status != 'TERMINATE')
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>
@@ -100,35 +101,25 @@
                     @endphp
                 <td>{{ $duration }} year</td>
 
-                else@if($data->duration_left > 30)
+                @elseif($data->duration_left > 30)
                     @php
                         $duration = intval($data->duration_left / 30);
                     @endphp
                 <td>{{ $duration }} month</td>
 
                 @else
-                    @php
-                        $duration = intval($data->duration_left / 360);
-                    @endphp
-                <td>{{ $duration }} day</td>
+                <td>{{ $data->duration_left }} day</td>
                 <td>
-                <td>
-                    <a href="{{ route('user.detail', ['name' => $data->c_name]) }}">
-                        <button type="button" class="btn btn-secondary">details</button>
-                    </a>
-                </td>
+
                 </td>
                 @endif
             </tr>
+            @endif
             @endforeach
         </tbody>
         </table>
       </div>
-      </div>
-      <div class="button-container">
-        <button id="downloadPdf" class="btn btn-secondary">Download</button>
-      </div>
-      
+      </div>      
     </div>
   </div>
   </main>
@@ -137,14 +128,7 @@
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      &copy; Copyright <strong><span>IIUM</span></strong>. All Rights Reserved
     </div>
   </footer><!-- End Footer -->
 
@@ -180,5 +164,11 @@
   @include('admin.script')
 
 </body>
+
+<footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>KICT_IIUM</span></strong>. All Rights Reserved
+    </div>
+  </footer>
 
 </html>

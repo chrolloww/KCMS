@@ -164,8 +164,23 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">Benefit</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror"  name="benefit" required>
+                                    <label for="">Category:</label>
+                                    <select name="type" class="form-control">
+                                        <option value="option1">Please select</option>
+                                        <option value="LoI">LoI</option>
+                                        <option value="MoA">MoA</option>
+                                        <option value="MoU">MoU</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Benefit:</label>
+                                    <textarea class="form-control @error('benefit') is-invalid @enderror"  name="benefit" rows="4" required></textarea>
+                                    @error('benefit')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                         
                                 <div class="form-group">
@@ -195,7 +210,12 @@
         </main>
     <!-- container-scroller -->
     <!-- plugins:js -->
-    
+    <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>KICT_IIUM</span></strong>. All Rights Reserved
+    </div>
+  </footer>
+
     @include('admin.script')
 
     <!-- End custom js for this page -->

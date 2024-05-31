@@ -183,7 +183,7 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{'home'}}"><i class="bi bi-house-door"></i></a></li>
-          <li class="breadcrumb-item"><a href="#">Expired Collaboration</a></li>
+          <li class="breadcrumb-item"><a href="#">Terminated Collaboration</a></li>
         </ol>
       </nav>
 
@@ -205,22 +205,9 @@
                   @endif
                   <td><strong>{{$data->c_name}}</strong><br>{{$data->s_name}}<br>{{$data -> s_email}}</td>
 
-                  @if($data->duration_left < 0)
-                    @php
-                      $duration = abs(intval($data->duration_left));
-                    @endphp
-                      <td><strong>Expired for:</strong><br>{{$duration}} days</td>
-                  @elseif($data->duration_left < 30)
-                    @php
-                      $duration = abs(intval($data->duration_left / 30));
-                    @endphp
-                      <td><strong>Expired for:</strong><br>{{$duration}} month</td>
-                  @elseif($data->duration_left < 360)
-                    @php
-                      $duration = abs(intval($data->duration_left / 360));
-                    @endphp
-                      <td><strong>Expired for:</strong><br>{{$duration}} year</td>
-                  @endif
+                  <td><strong>Reason:</strong><br>{{$data -> c_description}}</td>
+
+                  <td><strong>Terminated On:</strong><br>{{ \Carbon\Carbon::parse($data->updated_at)->format('F d, Y') }}</td>
                   
                   <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="{{ route('collaboration.details', $data->id)}}">View</a></td>
                 </tr>
@@ -241,14 +228,7 @@
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      &copy; Copyright <strong><span>KICT_IIUM</span></strong>. All Rights Reserved
     </div>
   </footer><!-- End Footer -->
 

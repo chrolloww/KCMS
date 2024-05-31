@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Collaboration;
 use App\Models\Staff;
 use App\Models\User;
+use App\Models\Activity;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -87,13 +88,23 @@ class JoinController extends Controller
 
     public function terminate(Request $request, $c_name)
     {
-        $data = Collaboration::where('c_name', $c_name)->firstOrFail();
+        $request->validate([
+            'termination_reason' => 'required|string|max:255',
+        ]);
 
-        // Update the status column to 'terminate'
-        $data->c_status = 'TERMINATE';
-        $data->save();
+        $collaboration = Collaboration::where('c_name', $c_name)->first();
 
-        return redirect()->back();
+        // Check if collaboration exists
+        if (!$collaboration) {
+            return redirect()->back()->with('error', 'Collaboration not found.');
+        }
+
+        // Perform termination actions here, for example:
+        $collaboration->c_status = 'TERMINATE';
+        $collaboration->c_description = $request->termination_reason;
+        $collaboration->save();
+
+        return redirect('/List_LoI')->with('success', 'Collaboration terminated successfully.');
     }
 
     public function update_collaboration($id)
@@ -131,7 +142,7 @@ class JoinController extends Controller
         //         -> where('id', $id)->get();
 
         //return dd($data);
-        return view('user.update_collaboration',compact('try', 'datas'));
+        return view('user.userdashboard',compact('try', 'datas'));
     }
 
     public function edit_collaboration(Request $request, $id)
@@ -182,10 +193,11 @@ class JoinController extends Controller
                 return $item;
             });
 
+        $details = $datas->filter(function ($item) use ($c_name) {
+            return $item->c_name === $c_name;
+        })->values();
 
-        $details = collect($datas)->where('c_name', $c_name)->values();
-
-        if (!$details) {
+        if ($details->isEmpty()) {
             Log::error("Collaboration with name {$c_name} not found.");
             return abort(404, 'Collaboration not found');
         }
@@ -193,4 +205,29 @@ class JoinController extends Controller
         //return dd($details);
         return view('user.details.collaboration_details', compact('details'));
     }
+
+    public function updateCollaborationactivities(Request $request, $c_name)
+{
+    $request->validate([
+        'a_activity_name' => 'required|string|max:255',
+        'a_activity_description' => 'required|string|max:255',
+        'activity_date' => 'required|date',
+    ]);
+
+    $collaboration = Collaboration::where('c_name', $c_name)->first();
+
+    if (!$collaboration) {
+        return redirect()->back()->with('error', 'Collaboration not found.');
+    }
+
+    $activity = new Activity();
+    $activity->a_activity_name = $request->a_activity_name;
+    $activity->a_activity_description = $request->a_activity_description;
+    $activity->created_at = $request->activity_date;
+    $activity->a_collaboration_name = $c_name;
+    $activity->a_activity_PIC = $request->a_activity_PIC;
+    $activity->save();
+
+    return redirect()->back()->with('success', 'Activity added successfully.');
+}
 }

@@ -23,16 +23,25 @@ class AdminController extends Controller
 
     public function listview_staff()
     {
-        $datas = DB::table('staffs')
+
+        $staffsNoCollab = DB::table('staffs')
+            ->leftJoin('collaborations', 'staffs.s_staff_id', '=', 'collaborations.c_focal_person')
+            ->select('staffs.s_staff_id', 'staffs.s_name', 'staffs.s_email', DB::raw('count(collaborations.id) as total_collaborations'))
+            ->groupBy('staffs.s_staff_id', 'staffs.s_name', 'staffs.s_email')
+            ->having('total_collaborations', '=', 0)
+            ->get();
+
+        $staffCollab = DB::table('staffs')
             ->leftjoin('collaborations','staffs.s_staff_id', '=', 'collaborations.c_focal_person')
             ->join('users', 'staffs.s_staff_id', '=', 'users.staff_id')
             ->select('staffs.s_staff_id', 'staffs.s_name', 'staffs.s_email', DB::raw('count(collaborations.c_focal_person) as total_collaboration'))
             ->where('users.usertype', '!=', 1)
             ->groupBy('staffs.s_staff_id', 'staffs.s_name', 'staffs.s_email')
+            ->orderBy('total_collaboration', 'desc')
             ->get();
 
-        //return dd($datas);
-        return view('admin.staff.list_staff',compact('datas'));
+        //return dd($staffsNoCollab);
+        return view('admin.staff.list_staff',compact('staffCollab','staffsNoCollab'));
     }
 
     public function details_view($id)
@@ -67,7 +76,7 @@ class AdminController extends Controller
 
             $collaboration->c_name=$request->name;
             $collaboration->c_focal_person=$request->focal_person;
-            $collaboration->c_type=$request->type??'LoI';
+            $collaboration->c_type=$request->type;
             $collaboration->c_benefit=$request->benefit;
             $collaboration->c_start_date=$request->start_date;
             $collaboration->c_end_date=$request->end_date;
@@ -87,12 +96,12 @@ class AdminController extends Controller
 
             DB::commit();
 
-            return redirect()->back()->with('message','Collaboration added successfully');
+            return redirect()->back()->with('message','Staff added successfully');
         }
         catch(\Exception $e)
         {
             DB::rollback();
-            return redirect()->back()->with('message','Collaboration could not be added');
+            return redirect()->back()->with('message','Staff could not be added');
         }
 
     }

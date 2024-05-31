@@ -5,6 +5,7 @@
 <script src="../assets/js/theme.js"></script>
 
 
+
 <!-- Accordion -->
   <!-- <script src="{{asset('admin/assets/vendor/apexcharts/apexcharts.min.js')}}"></script>
   <script src="{{asset('admin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

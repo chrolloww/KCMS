@@ -42,7 +42,7 @@ Route::get('/staff_list_view', 'App\Http\Controllers\AdminController@listview_st
 
 Route::get('/staff_list_view_{id}', 'App\Http\Controllers\AdminController@details_view')->name('list.view');
 
-Route::get('/user_detail_{name}', 'App\Http\Controllers\JoinController@user_details_view')->name('user.detail');
+Route::get('/user_detail_{id}', 'App\Http\Controllers\JoinController@user_details_view')->name('user.detail');
 
 Route::post('/upload_staff', 'App\Http\Controllers\AdminController@upload_staff');
 
@@ -51,8 +51,6 @@ Route::get('/List_MoA', 'App\Http\Controllers\JoinController@display_collaborati
 Route::get('/List_MoU', 'App\Http\Controllers\JoinController@display_collaboration_admin_MoU');
 
 Route::get('/List_LoI', 'App\Http\Controllers\JoinController@display_collaboration_admin_LoI');
-
-Route::get('/fyp1/collaborations/', 'App\Http\Controllers\JoinController@details_Active_LoI');
 
 Route::get('/collaborations_{name}', [JoinController::class, 'details'])-> name('collaboration.details');
 
@@ -85,3 +83,5 @@ Route::get('/update_collaboration/{name}', 'App\Http\Controllers\JoinController@
 Route::post('/edit_collaboration/{id}', 'App\Http\Controllers\JoinController@edit_collaboration')->name('edit_collaboration');
 
 Route::get('/cancel_update_collaboration', 'App\Http\Controllers\JoinController@cancel_update_collaboration')->name('cancel_update_collaboration');
+
+Route::post('/update_collaboration/{name}', 'App\Http\Controllers\JoinController@updateCollaborationactivities')->name('activities.add');
