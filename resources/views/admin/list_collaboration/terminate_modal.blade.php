@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('file.terminate', [$data->c_name]) }}" method="POST" onsubmit="return confirm('Are you sure you want to terminate this collaboration?');">
+            <form action="{{ route('collaboration.terminate', [$data->c_name]) }}" method="POST" onsubmit="return confirm('Are you sure you want to terminate this collaboration?');">
                 @csrf
                 <div class="modal-body">
                     <label for="termination_reason">Enter termination reason:</label>

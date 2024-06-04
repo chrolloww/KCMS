@@ -94,24 +94,40 @@
                     @endif
                 </td>
                 <td>{{ $data->c_name }}</td>
+                @if($data->duration_left > 0)
+                  @if($data->duration_left > 360)
+                      @php
+                          $duration = intval($data->duration_left / 360);
+                      @endphp
+                  <td>{{ $duration }} year</td>
 
-                @if($data->duration_left > 360)
-                    @php
-                        $duration = intval($data->duration_left / 360);
-                    @endphp
-                <td>{{ $duration }} year</td>
+                  @elseif($data->duration_left > 30)
+                      @php
+                          $duration = intval($data->duration_left / 30);
+                      @endphp
+                  <td>{{ $duration }} month</td>
 
-                @elseif($data->duration_left > 30)
-                    @php
-                        $duration = intval($data->duration_left / 30);
-                    @endphp
-                <td>{{ $duration }} month</td>
+                  @else
+                  <td>{{ $data->duration_left }} day</td>
+                  @endif
 
                 @else
-                <td>{{ $data->duration_left }} day</td>
-                <td>
-
-                </td>
+                  @if($data->duration_left < 0 && $data->duration_left > -30)
+                      @php
+                          $duration = round(abs(intval($data->duration_left)));
+                      @endphp
+                      <td><strong>Expired for:</strong><br>{{$duration}} days</td>
+                  @elseif($data->duration_left <= -30 && $data->duration_left > -360)
+                      @php
+                          $duration = round(abs(intval($data->duration_left)) / 30);
+                      @endphp
+                      <td><strong>Expired for:</strong><br>{{$duration}} months</td>
+                  @elseif($data->duration_left <= -360)
+                      @php
+                          $duration = round(abs(intval($data->duration_left)) / 360);
+                      @endphp
+                      <td><strong>Expired for:</strong><br>{{$duration}} years</td>
+                  @endif
                 @endif
             </tr>
             @endif
@@ -136,39 +152,8 @@
 
   <!-- Vendor JS Files -->
 
-  <script>
-    document.getElementById('downloadPdf').addEventListener('click', function () {
-      const { jsPDF } = window.jspdf;
-      const content = document.getElementById('content');
-
-      if (content) {
-        html2canvas(content, { scale: 2 }).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('p', 'mm', 'a4');
-            const imgProps = pdf.getImageProperties(imgData);
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-            pdf.save('collaboration_details.pdf');
-        }).catch(err => {
-            console.error('Error capturing content:', err);
-          });
-      } 
-      else {
-        console.error('Content element not found');
-      }
-    });
-  </script>
-
   @include('admin.script')
 
 </body>
-
-<footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>KICT_IIUM</span></strong>. All Rights Reserved
-    </div>
-  </footer>
 
 </html>

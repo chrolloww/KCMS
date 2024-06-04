@@ -104,17 +104,11 @@ class JoinController extends Controller
         $collaboration->c_description = $request->termination_reason;
         $collaboration->save();
 
-        return redirect('/List_LoI')->with('success', 'Collaboration terminated successfully.');
+        return redirect()->intended()->with('success', 'Collaboration terminated successfully.');
     }
 
     public function update_collaboration($id)
     {
-        // $data = Collaboration::with('Staff')->find($id);
-        // if (!$data) 
-        // {
-        //     return redirect()->back()->with('error', 'Collaboration not found');
-        // }
-
         $user = auth()->user()->staff_id;
         $try = DB::table('staffs')
                 ->where('s_staff_id', $user)
@@ -132,17 +126,8 @@ class JoinController extends Controller
                     return $item;
                 });
 
-        //return dd($datas);
-
-        // $id = 'id';
-        // $try = DB::table('staffs')->get();
-        // $datas = DB::table('staffs')
-        //         ->join('collaborations', 'staffs.s_name', '=', 'collaborations.c_focal_person')
-        //         ->select('staffs.*', 'collaborations.*')
-        //         -> where('id', $id)->get();
-
         //return dd($data);
-        return view('user.userdashboard',compact('try', 'datas'));
+        return view('user.update_collaboration',compact('try', 'datas'));
     }
 
     public function edit_collaboration(Request $request, $id)
@@ -161,7 +146,7 @@ class JoinController extends Controller
         }
 
         $data->save();
-        return redirect('/userdashboard');
+        return redirect('/');
     }
 
     public function cancelUpdateCollaboration()
@@ -207,27 +192,27 @@ class JoinController extends Controller
     }
 
     public function updateCollaborationactivities(Request $request, $c_name)
-{
-    $request->validate([
-        'a_activity_name' => 'required|string|max:255',
-        'a_activity_description' => 'required|string|max:255',
-        'activity_date' => 'required|date',
-    ]);
+    {
+        $request->validate([
+            'a_activity_name' => 'required|string|max:255',
+            'a_activity_description' => 'required|string|max:255',
+            'activity_date' => 'required|date',
+        ]);
 
-    $collaboration = Collaboration::where('c_name', $c_name)->first();
+        $collaboration = Collaboration::where('c_name', $c_name)->first();
 
-    if (!$collaboration) {
-        return redirect()->back()->with('error', 'Collaboration not found.');
+        if (!$collaboration) {
+            return redirect()->back()->with('error', 'Collaboration not found.');
+        }
+
+        $activity = new Activity();
+        $activity->a_activity_name = $request->a_activity_name;
+        $activity->a_activity_description = $request->a_activity_description;
+        $activity->created_at = $request->activity_date;
+        $activity->a_collaboration_name = $c_name;
+        $activity->a_activity_PIC = $request->a_activity_PIC;
+        $activity->save();
+
+        return redirect()->back()->with('success', 'Activity added successfully.');
     }
-
-    $activity = new Activity();
-    $activity->a_activity_name = $request->a_activity_name;
-    $activity->a_activity_description = $request->a_activity_description;
-    $activity->created_at = $request->activity_date;
-    $activity->a_collaboration_name = $c_name;
-    $activity->a_activity_PIC = $request->a_activity_PIC;
-    $activity->save();
-
-    return redirect()->back()->with('success', 'Activity added successfully.');
-}
 }

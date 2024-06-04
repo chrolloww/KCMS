@@ -90,28 +90,10 @@
                 </td>
             </tr>
             @endforeach
-
-            @foreach($staffsNoCollab as $data)
-            <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $data->s_name }}</td>
-                <td>{{ $data->s_email }}</td>
-                <td>{{ $data->total_collaborations }}</td>
-                <td>
-                    <a href="{{ route('list.view', ['id' => $data->s_staff_id]) }}">
-                        <button type="button" class="btn btn-primary">view</button>
-                    </a>
-                </td>
-            </tr>
-            @endforeach
         </tbody>
         </table>
       </div>
-      </div>
-      <<div class="button-container">
-        <button id="downloadPdf" class="btn btn-secondary">Print</button>
-      </div>
-      
+      </div>      
     </div>
   </div>
   </main>
@@ -127,31 +109,6 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-
-  <script>
-    document.getElementById('downloadPdf').addEventListener('click', function () {
-      const { jsPDF } = window.jspdf;
-      const content = document.getElementById('content');
-
-      if (content) {
-        html2canvas(content, { scale: 2 }).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('p', 'mm', 'a4');
-            const imgProps = pdf.getImageProperties(imgData);
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-            pdf.save('collaboration_details.pdf');
-        }).catch(err => {
-            console.error('Error capturing content:', err);
-          });
-      } 
-      else {
-        console.error('Content element not found');
-      }
-    });
-  </script>
   
   @include('admin.script')
 

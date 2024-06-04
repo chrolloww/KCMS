@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Collaboration;
 use App\Models\Document;
 use App\Models\Staff;
+use App\Models\Announcement;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -23,33 +24,23 @@ class AdminController extends Controller
 
     public function listview_staff()
     {
-
-        $staffsNoCollab = DB::table('staffs')
-            ->leftJoin('collaborations', 'staffs.s_staff_id', '=', 'collaborations.c_focal_person')
-            ->select('staffs.s_staff_id', 'staffs.s_name', 'staffs.s_email', DB::raw('count(collaborations.id) as total_collaborations'))
-            ->groupBy('staffs.s_staff_id', 'staffs.s_name', 'staffs.s_email')
-            ->having('total_collaborations', '=', 0)
-            ->get();
-
         $staffCollab = DB::table('staffs')
             ->leftjoin('collaborations','staffs.s_staff_id', '=', 'collaborations.c_focal_person')
-            ->join('users', 'staffs.s_staff_id', '=', 'users.staff_id')
             ->select('staffs.s_staff_id', 'staffs.s_name', 'staffs.s_email', DB::raw('count(collaborations.c_focal_person) as total_collaboration'))
-            ->where('users.usertype', '!=', 1)
             ->groupBy('staffs.s_staff_id', 'staffs.s_name', 'staffs.s_email')
             ->orderBy('total_collaboration', 'desc')
             ->get();
 
-        //return dd($staffsNoCollab);
-        return view('admin.staff.list_staff',compact('staffCollab','staffsNoCollab'));
+        //return dd($staffCollab);
+        return view('admin.staff.list_staff',compact('staffCollab'));
     }
 
     public function details_view($id)
     {
         $datas = DB::table('staffs')
             ->leftjoin('collaborations','staffs.s_staff_id', '=', 'collaborations.c_focal_person')
-            ->join('users', 'staffs.s_staff_id', '=', 'users.staff_id')
             ->select('staffs.*', 'collaborations.*')
+            ->where('staffs.s_staff_id', '=', $id)
             ->get()
             ->map(function ($item) {
                 $endDate = Carbon::parse($item->c_end_date);
@@ -87,7 +78,7 @@ class AdminController extends Controller
 
             $d_document_name = $request->file;
             $document_file = time().'.'.$d_document_name->getClientoriginalExtension();
-            $request->file->move('collabimages',$document_file);
+            $request->file->move('pdf_files',$document_file);
 
             $document->d_collaboration_name = $request->name;
             $document->d_document_name = $document_file;
@@ -96,12 +87,12 @@ class AdminController extends Controller
 
             DB::commit();
 
-            return redirect()->back()->with('message','Staff added successfully');
+            return redirect()->back()->with('message','Collaboration added successfully');
         }
         catch(\Exception $e)
         {
             DB::rollback();
-            return redirect()->back()->with('message','Staff could not be added');
+            return redirect()->back()->with('message','Collaboration could not be added');
         }
 
     }
@@ -122,6 +113,39 @@ class AdminController extends Controller
 
         $staff->save();
 
-        return redirect()->back()->with('message','Collaboration added successfully');
+        return redirect()->back()->with('message','Staff added successfully');
+    }
+
+    public function add_announcement()
+    {
+        $announcements = Announcement::all();
+        return view('admin.add_announcement', compact('announcements'));
+    }
+
+    public function publish_announcement(Request $request)
+    {
+        $data = new Announcement;
+        $data->title = $request->title;
+        $data->description = $request->description;
+        $data->save();
+        return redirect()->route('add_announcement')->with('success', 'Announcement added successfully');
+    }
+
+    public function update_announcement(Request $request, $id)
+    {
+        $announcement = Announcement::find($id);
+        $announcement->title = $request->title;
+        $announcement->description = $request->description;
+        $announcement->save();
+
+        return redirect()->route('add_announcement')->with('success', 'Announcement updated successfully');
+    }
+
+    public function delete_announcement($id)
+    {
+        $announcement = Announcement::find($id);
+        $announcement->delete();
+    
+        return redirect()->route('add_announcement')->with('success', 'Announcement deleted successfully');
     }
 }

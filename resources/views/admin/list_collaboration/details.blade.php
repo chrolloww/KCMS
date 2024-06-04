@@ -264,10 +264,8 @@
       
     @if($data->c_status != 'TERMINATE')
     <div class="d-flex justify-content-between align-items-center">
-        <form action="{{ route('file.terminate', [$data->c_name]) }}" method="POST" onsubmit="return confirm('Are you sure you want to terminate this collaboration?');">
-          @csrf
           <button type="submit" class="btn btn-danger" data-toggle='modal' data-target="#deleteModal" style="width: 110px; height: 40px; font-size: 15px; align-self: flex-start;" >TERMINATE</button>
-        </form>
+          @include('admin.list_collaboration.terminate_modal')
     @endif
 
         <button id="downloadPdf" class="btn btn-secondary" style="width: 110px; height: 40px; font-size: 15px; align-self: flex-end;">Print</button>

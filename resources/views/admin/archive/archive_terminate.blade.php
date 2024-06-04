@@ -169,6 +169,13 @@
           </div>
       </li>
 
+      <li class="nav-item">
+          <a class="nav-link collapsed" href="{{'add_announcement'}}">
+            <i class="bi bi-question-circle"></i>
+            <span>Announcement</span>
+          </a>
+      </li>
+
     </ul>
 
   </aside>
@@ -179,7 +186,7 @@
 
   <div class="content-wrapper">
     <div class="pagetitle">
-    <h1 class="page-title">Terminated Collabortaion</h1>
+    <h1 class="page-title">Terminated Collaboration</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{'home'}}"><i class="bi bi-house-door"></i></a></li>

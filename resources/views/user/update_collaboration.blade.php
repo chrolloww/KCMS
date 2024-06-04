@@ -96,31 +96,6 @@
 <body>
 
 <!-- Back to top button -->
-  <!-- <div class="back-to-top"></div>
-
-  <header>
-    <div class="topbar">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-8 text-sm">
-            <div class="site-info">
-              <a href="#"><span class="mai-call text-primary"></span> +00 123 4455 6666</a>
-              <span class="divider">|</span>
-              <a href="#"><span class="mai-mail text-primary"></span> mail@example.com</a>
-            </div>
-          </div>
-          <div class="col-sm-4 text-right text-sm">
-            <div class="social-mini-button">
-              <a href="#"><span class="mai-logo-facebook-f"></span></a>
-              <a href="#"><span class="mai-logo-twitter"></span></a>
-              <a href="#"><span class="mai-logo-dribbble"></span></a>
-              <a href="#"><span class="mai-logo-instagram"></span></a>
-            </div>
-          </div>
-        </div> 
-      </div> 
-    </div>  -->
-
     <!-- Nav -->
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
       <div class="container">
@@ -204,19 +179,6 @@
 
         <form action="{{url('edit_collaboration', $data->id)}}" method="post" enctype="multipart/form-data">
             @csrf
-            <!-- <div class="form-group">
-              <h1><strong>Benefit:</strong></h1>
-              <textarea name="c_benefit">{{$data->c_benefit}}</textarea> 
-            </div> -->
-
-            <!-- <div class="form-group">
-                
-                <select name="c_type" id="c_type">
-                    <option value="{{$data->c_type}}">{{$data->c_type}}</option>
-                    <option value="MoA">MoA</option>
-                    <option value="MoU">MoU</option>
-                </select>
-            </div> -->
            
             <div class="form-actions">
                 <h1><strong>Update Image:</strong></h1>  

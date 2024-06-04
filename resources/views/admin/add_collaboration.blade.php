@@ -112,6 +112,13 @@
           </div>
       </li>
 
+      <li class="nav-item">
+          <a class="nav-link collapsed" href="{{'add_announcement'}}">
+            <i class="bi bi-question-circle"></i>
+            <span>Announcement</span>
+          </a>
+      </li>
+
     </ul>
 
   </aside>

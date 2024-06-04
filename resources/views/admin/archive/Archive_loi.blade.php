@@ -169,6 +169,13 @@
           </div>
       </li>
 
+      <li class="nav-item">
+          <a class="nav-link collapsed" href="{{'add_announcement'}}">
+            <i class="bi bi-question-circle"></i>
+            <span>Announcement</span>
+          </a>
+      </li>
+
     </ul>
 
   </aside>
@@ -205,21 +212,21 @@
                   @endif
                   <td><strong>{{$data->c_name}}</strong><br>{{$data->s_name}}<br>{{$data -> s_email}}</td>
 
-                  @if($data->duration_left < 0)
-                    @php
-                      $duration = abs(intval($data->duration_left));
-                    @endphp
+                  @if($data->duration_left < 0 && $data->duration_left > -30)
+                      @php
+                          $duration = round(abs(intval($data->duration_left)));
+                      @endphp
                       <td><strong>Expired for:</strong><br>{{$duration}} days</td>
-                  @elseif($data->duration_left < 30)
-                    @php
-                      $duration = abs(intval($data->duration_left / 30));
-                    @endphp
-                      <td><strong>Expired for:</strong><br>{{$duration}} month</td>
-                  @elseif($data->duration_left < 360)
-                    @php
-                      $duration = abs(intval($data->duration_left / 360));
-                    @endphp
-                      <td><strong>Expired for:</strong><br>{{$duration}} year</td>
+                  @elseif($data->duration_left <= -30 && $data->duration_left > -360)
+                      @php
+                          $duration = round(abs(intval($data->duration_left)) / 30);
+                      @endphp
+                      <td><strong>Expired for:</strong><br>{{$duration}} months</td>
+                  @elseif($data->duration_left <= -360)
+                      @php
+                          $duration = round(abs(intval($data->duration_left)) / 360);
+                      @endphp
+                      <td><strong>Expired for:</strong><br>{{$duration}} years</td>
                   @endif
                   
                   <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="{{ route('collaboration.details', $data->id)}}">View</a></td>

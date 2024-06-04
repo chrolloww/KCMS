@@ -121,7 +121,7 @@
                   </div>
                 <div class="ps-3">
                   <h6>
-                    {{ $datas->filter(function ($data) use ($filter) { return $data->c_status == 'TERMINATE';})->count() }}
+                    {{ $total->filter(function ($data) { return $data->c_status == 'TERMINATE';})->count() }}
                   </h6>
                   <span class="text-danger small pt-1 fw-bold">Terminated</span> 
                   <span class="text-muted small pt-2 ps-1">collaboration</span>
@@ -142,7 +142,7 @@
               <div class="card">
                 <div class="card-body">
                   <h5 class="card-title">Total Signed Collaboration <span> /5 years</span></h5>
-                  @include('user.chart')
+                  @include('admin.chart')
 
                 </div>
 

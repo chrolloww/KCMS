@@ -48,7 +48,6 @@
         {
           width: 100px;
           height: 100px;
-          /* object-fit: cover; Ensures the image remains square and covers the area */
         }
 
         .image_cell, .button_cell 
@@ -65,32 +64,11 @@
   <div class="back-to-top"></div>
 
   <header>
-    <!-- <div class="topbar">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-8 text-sm">
-            <div class="site-info">
-              <a href="#"><span class="mai-call text-primary"></span> +00 123 4455 6666</a>
-              <span class="divider">|</span>
-              <a href="#"><span class="mai-mail text-primary"></span> mail@example.com</a>
-            </div>
-          </div>
-          <div class="col-sm-4 text-right text-sm">
-            <div class="social-mini-button">
-              <a href="#"><span class="mai-logo-facebook-f"></span></a>
-              <a href="#"><span class="mai-logo-twitter"></span></a>
-              <a href="#"><span class="mai-logo-dribbble"></span></a>
-              <a href="#"><span class="mai-logo-instagram"></span></a>
-            </div>
-          </div>
-        </div> 
-      </div> 
-    </div>  -->
 
     <!-- Nav -->
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
       <div class="container">
-        <a class="navbar-brand" href="#"><span class="text-primary">KICT</span> - Collaboration Management System</a>
+        <a class="navbar-brand" href="#"><span class="text-success">KICT</span> - Collaboration Management System</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupport" aria-controls="navbarSupport" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -100,12 +78,6 @@
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
               <a class="nav-link active" href="{{'/'}}">Home</a>
-            </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link" href="about.html">Collaboration</a>
-            </li> -->
-            <li class="nav-item">
-              <a class="nav-link" href="blog.html">Announcement</a>
             </li>
 
             @if(Route::has('login'))
@@ -159,7 +131,7 @@
                   <td><strong>{{$data->c_name}}</strong><br>{{$data->c_focal_person}}<br>{{$data -> s_email}}</td>
                   @include('user.view_details')
                   <td class="button_cell"><a class="btn btn-primary" href="{{url('update_collaboration',$data->id)}}">Update</a></td>
-                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="{{ route('user.detail', $data->c_name)}}">Details</a></td>
+                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="{{ route('collaboration.detail', $data->c_name)}}">Details</a></td>
                 </tr>
 
                 @endif
@@ -193,7 +165,7 @@
                   <td><strong>{{$data->c_name}}</strong><br>{{$data->c_focal_person}}<br>{{$data -> s_email}}</td>
                   @include('user.view_details')
                   <td class="button_cell"><a class="btn btn-primary" href="{{url('update_collaboration',$data->id)}}">Update</a></td>
-                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="{{ route('user.detail', $data->c_name)}}">Details</a></td>
+                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="{{ route('collaboration.detail', $data->c_name)}}">Details</a></td>
                 </tr>
 
                 @endif
@@ -227,7 +199,7 @@
                   <td><strong>{{$data->c_name}}</strong><br>{{$data->c_focal_person}}<br>{{$data -> s_email}}</td>
                   @include('user.view_details')
                   <td class="button_cell"><a class="btn btn-primary" href="{{url('update_collaboration',$data->id)}}">Update</a></td>
-                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="{{ route('user.detail', $data->c_name)}}">Details</a></td>
+                  <td class="button_cell"><a class="btn btn-secondary" onClick="confirmation(event)" href="{{ route('collaboration.detail', $data->c_name)}}">Details</a></td>
                 </tr>
 
                 @endif
