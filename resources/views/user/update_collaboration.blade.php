@@ -14,6 +14,14 @@
         padding: 20px;
     }
 
+    .container2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 10px;
+    }
+
     .form-box {
         background: #fff;
         border: 1px solid #ccc;
@@ -66,7 +74,7 @@
     }
 
     .form-group select {
-        width: 60%;
+        width: 10%;
         padding: 10px;
         border: 1px solid #ccc;
         border-radius: 4px;
@@ -76,13 +84,19 @@
         text-align: center;
     }
 
+    textarea
+        {
+            width: 450px;
+            height: 80px;
+        }
+
     
 </style>
 </head>
 <body>
 
 <!-- Back to top button -->
-  <div class="back-to-top"></div>
+  <!-- <div class="back-to-top"></div>
 
   <header>
     <div class="topbar">
@@ -103,9 +117,9 @@
               <a href="#"><span class="mai-logo-instagram"></span></a>
             </div>
           </div>
-        </div> <!-- .row -->
-      </div> <!-- .container -->
-    </div> <!-- .topbar -->
+        </div> 
+      </div> 
+    </div>  -->
 
     <!-- Nav -->
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
@@ -121,9 +135,9 @@
             <li class="nav-item">
               <a class="nav-link" href="{{'/'}}">Home</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link" href="about.html">Collaboration</a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a class="nav-link" href="blog.html">Announcement</a>
             </li>
@@ -163,27 +177,47 @@
   <div class="container1">
     <div class="form-box">
         <h1><strong>Update Collaboration</strong></h1>
+
+        @if(isset($data) && $data->c_image)
         <div class="image-display">
-            <img src="/collabimages/{{$data->c_image}}" alt="Collaboration Image">
+          <img src="/collabimages/{{$data->c_image}}" alt="Collaboration Image">
         </div>
+        @else
+        <div class="image-display">
+          <img src="/collabimages/default-image.jpg" alt="Default Image">
+        </div>
+        @endif
 
         <div class="form-content">
             <h1>{{$data->c_name}}</h1>
             <h1>{{$data->c_focal_person}}</h1>
-            <h1>{{$data->s_phone_number}}</h1>
+            <h1>{{$data->s_email}}</h1>
+            <h1>{{$data->c_type}}</h1><br>
+            <h1><strong>Benefit:</strong></h1>
+            <h1>{{$data->c_benefit}}</h1>
         </div>
 
         <form action="{{url('edit_collaboration', $data->id)}}" method="post" enctype="multipart/form-data">
             @csrf
-            <div class="form-group">
-                <!-- <label for="c_type">Category</label> -->
+            <!-- <div class="form-group">
+              <h1><strong>Benefit:</strong></h1>
+              <textarea name="c_benefit">{{$data->c_benefit}}</textarea> 
+            </div> -->
+
+            <!-- <div class="form-group">
+                
                 <select name="c_type" id="c_type">
                     <option value="{{$data->c_type}}">{{$data->c_type}}</option>
                     <option value="MoA">MoA</option>
                     <option value="MoU">MoU</option>
                 </select>
+            </div> -->
+           
+            <div class="form-actions">
+                <h1><strong>Update Image:</strong></h1>  
+                <input style="margin-right:-100px" type="file" name="c_image">
             </div>
-
+            <br>
             <div class="form-actions">
                 <input class="btn btn-success" type="submit" value="Update Collaboration">
                 <button class="btn btn-secondary" type="button" onclick="cancelUpdate()">Cancel</button>
@@ -199,8 +233,9 @@
     }
   </script>
 @include('user.script')
-<script>
-    function cancelUpdate() {
+  <script>
+    function cancelUpdate() 
+    {
         window.history.back();
     }
 </script>

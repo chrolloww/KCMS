@@ -37,15 +37,4 @@ class HomeController extends Controller
             return view('user.home');
         }
     }
-
-    public function userdashboard()
-    {
-        $collaboration = Collaboration::all();
-        return view('user.userdashboard', compact('collaboration'));
-    }
-
-    public function collaboration()
-    {
-        
-    }
 }

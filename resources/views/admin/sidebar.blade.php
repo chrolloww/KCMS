@@ -17,6 +17,86 @@
       </li>
 
       <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#collaboration-list" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>Active Collaboration</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="collaboration-list" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{'List_LoI'}}">
+              <i class="bi bi-circle"></i><span>LOI</span>
+            </a>
+          </li>
+        </ul>
+
+        <ul id="collaboration-list" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{'List_MoA'}}">
+              <i class="bi bi-circle"></i><span>MoA</span>
+            </a>
+          </li>
+        </ul>
+
+        <ul id="collaboration-list" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{'List_MoU'}}">
+              <i class="bi bi-circle"></i><span>MoU</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#archive-list" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>Archive</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="archive-list" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{'Archived_List_LoI'}}">
+              <i class="bi bi-circle"></i><span>Expired LoI</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="{{'Archived_List_MoA'}}">
+              <i class="bi bi-circle"></i><span>Expired MoA</span>
+            </a>
+          </li>
+        
+          <li>
+            <a href="{{'Archived_List_MoU'}}">
+              <i class="bi bi-circle"></i><span>Expired MoU</span>
+            </a>
+          </li>
+        
+          <li>
+            <a href="{{'Archived_List_Terminate'}}">
+              <i class="bi bi-circle"></i><span>Terminate</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#Staff-list" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-person"></i><span>Staff</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="Staff-list" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+            <a href="{{'Archived_List_LoI'}}">
+              <i class="bi bi-circle"></i><span>Staff List</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="{{'add_staff_view'}}">
+              <i class="bi bi-circle"></i><span>Add Staff</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -188,12 +268,7 @@
 
       <li class="nav-heading">Pages</li>
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
-          <i class="bi bi-person"></i>
-          <span>Profile</span>
-        </a>
-      </li><!-- End Profile Page Nav -->
+      <!-- End Profile Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-faq.html">
@@ -203,7 +278,7 @@
       </li><!-- End F.A.Q Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-contact.html">
+        <a class="nav-link collapsed" href="{{'add_announcement'}}">
           <i class="bi bi-envelope"></i>
           <span>Contact</span>
         </a>

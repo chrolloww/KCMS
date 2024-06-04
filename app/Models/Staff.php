@@ -9,15 +9,11 @@ use App\Models\Collaboration;
 class Staff extends Model
 {
     use HasFactory;
+    protected $table = 'staffs';
     protected $fillable = [
-        'name', 
-        'email', 
-        'phone_number'
+        's_name', 
+        's_email', 
+        's_staff_id',
     ];
-
-    public function collaborations()
-    {
-        return $this->hasMany(Collaboration::class, 'focal_person', 'name');
-    }
 
 }

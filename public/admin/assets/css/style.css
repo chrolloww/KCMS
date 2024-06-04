@@ -1231,3 +1231,38 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+
+.collaboration-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin: 20px;
+}
+
+.collaboration-box {
+  width: auto;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  padding: 15px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.collaboration-box:hover {
+  transform: scale(1.05);
+}
+
+.collaboration-box h2 {
+  margin-bottom: 20px; /* Add space below h2 */
+}
+
+.collaboration-box p {
+  margin-bottom: 5px; /* Add space below h2 */
+}
+
+.space-me {
+  margin-left: 10px;
+}

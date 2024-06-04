@@ -10,7 +10,7 @@
             @csrf
 
             <div>
-                <x-label for="name" value="{{ __('Name') }}" />
+                <x-label for="name" value="{{ __('User Name') }}" />
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             </div>
 
@@ -20,8 +20,8 @@
             </div>
 
             <div class="mt-4">
-                <x-label for="number" value="{{ __('Phone Number') }}" />
-                <x-input id="number" class="block mt-1 w-full" type="number" name="number" :value="old('number')" required autocomplete="username" />
+                <x-label for="staff_id" value="{{ __('Staff ID') }}" />
+                <x-input id="staff_id" class="block mt-1 w-full" type="text" name="staff_id" :value="old('staff_id')" required autofocus autocomplete="name" />
             </div>
 
             <div class="mt-4">
